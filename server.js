@@ -1,5 +1,5 @@
 import Fastify from 'fastify'
-import {DatabaseMemory} from './dbmemo.js'
+import { DatabaseMemory } from './dbmemo.js'
 
 const database = new DatabaseMemory()
 
@@ -13,24 +13,35 @@ fastify.get('/', async function handler(request, reply) {
 })
 
 fastify.post('/videos', async function handler(request, reply) {
-    const body = request.body
-    console.log(body)
-    database.create({
-        title: 'Video 01',
-        description: 'vídeo teste',
-        duration: 1000
+    const { title, description, duration } = request.body
+
+    database.create({   
+        title,
+        description,
+        duration
     })
 
     return reply.status(201).send()
-    
+
 })
 
 fastify.get('/videos', async function handler(request, reply) {
-    return { hello: 'world' }
+    const videos = database.list()
+
+    return reply.send(videos)
 })
 
 fastify.put('/videos/:id', async function handler(request, reply) {
-    return { hello: 'world' }
+    const { title, description, duration } = request.body
+    const videoId = request.params.id
+
+    database.update(videoId, {
+        title,
+        description,
+        duration
+    })
+
+    return reply.status(204).send()
 })
 
 // Run the server!

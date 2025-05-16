@@ -3,5 +3,22 @@ Content-Type: application/json
 
 
 {
-    "title": "video 01"
+    "title": "video 01",
+    "description": "vídeo teste",
+    "duration": 1000
+}
+
+###
+
+GET http://localhost:3000/videos
+
+###
+PUT http://localhost:3000/videos/id
+Content-Type: application/json
+
+
+{
+    "title": "video 01",
+    "description": "vídeo teste",
+    "duration": 1000
 }
